@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><!-- qmake-manual.qdoc --><title>Обзор | Руководство по использованию qmake</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-7">Qt 5.7</a></td><td ><a href="qmake-manual.html">Руководство по использованию qmake</a></td><td >Обзор</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Справочная документация Qt 5.7.1</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="qmake-manual.html" />
+  <link rel="next" href="qmake-tutorial.html" />
+<p class="naviNextPrevious headerNavi"><a class="prevPage" href="qmake-manual.html">Руководство по использованию qmake</a> <span class="naviSeparator">◦</span> <a class="nextPage" href="qmake-tutorial.html">Начало работы</a></p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Содержание</a></h3>
+<ul>
+<li class="level1"><a href="#describing-a-project">Описание проекта</a></li>
+<li class="level1"><a href="#building-a-project">Построение проекта</a></li>
+<li class="level1"><a href="#using-third-party-libraries">Использование сторонних библиотек</a></li>
+<li class="level1"><a href="#precompiling-headers">Предварительно скомпилированные заголовочники</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Обзор</h1><span class="subtitle"></span> <!-- $$$qmake-overview.html-description --><div class="descr"><a name="details"></a><p>Инструмент qmake предоставляет проектно-ориентированную систему для управления процессом сборки приложений, библиотек и других компонентов. Этот подход дает вам контроль над исходными файлами и позволяет кратко описать каждый шаг процесса, обычно в рамках одного файла. qmake расширяет информацию в каждом файле проекта до Мэйкфайла, выполняющего необходимые команды для компиляции и линковки.</p><a name="describing-a-project"></a><h2 id="describing-a-project">Описание проекта</h2>
+<p>Сведения о проекте описываются в проектном файле (<code>.pro</code>). qmake использует информацию из этих файлов для создания Мейкфайлов, содержащих все команды, необходимые для сборки каждого проекта. Файлы проектов обычно содержат список исходных и заголовочных файлов, общую информацию о конфигурации, а также любую конкретную информацию о приложении, например, список дополнительных библиотек для компоновки или список дополнительных включаемых путей (include paths) использования.</p>
+<p>Файлы проектов могут содержать множество различных элементов, включая комментарии, объявления переменных, встроенные функции и некоторые простые структуры управления. В большинстве простых проектов необходимо декларировать только исходные и заголовочные файлы, которые используются для сборки проекта, с некоторыми базовыми настройками. Дополнительные сведения о том, как создать простой файл проекта, см. в разделе <a href="qmake-tutorial.html">Начало работы</a>.</p>
+<p>Вы можете создавать более сложные проектные файлы для сложных проектов. Обзор файлов проекта см. в разделе <a href="qmake-project-files.html">Создание проектных файлов</a>. Подробную информацию о переменных и функциях, которые можно использовать в файлах проекта, см. в разделе <a href="qmake-reference.html">Ссылка</a>.</p>
+<p>Вы можете использовать проектные или библиотечные шаблоны приложений для задания особых параметров конфигурации для точной настройки процесса сборки. Дополнительные сведения см. в разделе  <a href="qmake-common-projects.html">Построение общих типов проектов</a>.</p>
+<p>Вы можете использовать <a href="http://doc.qt.io/qtcreator/creator-project-creating.html">мастера проектов Qt Creator</a> для создания проектного файла. Вы выбираете шаблон проекта, и Qt Creator создает файл проекта со значениями по умолчанию, которые позволяют вам собрать и запустить проект. Вы можете модифицировать файл проекта в соответствии со своими целями.</p>
+<p>Вы также можете использовать qmake для генерирования проектных файлов. Полное описание опций командной строки qmake смотрите в разделе <a href="qmake-running.html">Запуск qmake</a>.</p>
+<p>Базовые возможности Qmake по конфигурированию позволяют работать с большинством кросс-платформенных проектов. Тем не менее, может оказаться полезным или даже необходимым использовать некоторые специфичные для платформы переменные. Дополнительную информацию см. в <a href="qmake-platform-notes.html">Примечаниях к платформе</a>.</p><a name="building-a-project"></a><h2 id="building-a-project">Построение проекта</h2>
+<p>Для простых проектов достаточно запустить qmake в директории верхнего уровня вашего проекта, чтобы сгенерировать Мейкфайл. Затем вы можете запустить утилиту <code>make</code> для сборки проекта в соответствии с Мейкфайлом.</p>
+<p>Для получения дополнительной информации о переменных окружения, которые qmake использует при настройке процесса сборки, см. раздел <a href="qmake-environment-reference.html">Настройка qmake</a>.</p><a name="using-third-party-libraries"></a><h2 id="using-third-party-libraries">Использование сторонних библиотек</h2>
+<p>Руководство по <a href="../qtdoc/platform-notes-qnx.html#third-party-libraries">сторонним библиотекам</a> показывает вам, как использовать простые сторонние библиотеки в вашем проекте Qt.</p><a name="precompiling-headers"></a><h2 id="precompiling-headers">Предварительно скомпилированные заголовочники</h2>
+<p>В больших проектах возможно получить преимущество от предварительно скомпилированных заголовков, так как это ускоряет процесс построения. Дополнительные сведения см. в разделе <a href="qmake-precompiledheaders.html">Использование предварительно скомпилированных заголовков.</a>.</p>
+</div><!-- @@@qmake-overview.html --><p class="naviNextPrevious footerNavi"><a class="prevPage" href="qmake-manual.html">Руководство по использованию qmake</a> <span class="naviSeparator">◦</span> <a class="nextPage" href="qmake-tutorial.html">Начало работы</a></p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym>2016 Материалы Qt Company Ltd. Documentation, включенные в настоящий документ, является интеллектуальной собственностью их соответствующих владельцев.<br> Документация, представленная здесь, лицензирована в соответствии с условиями <a href="http://www.gnu.org/licenses/fdl.html">Лицензии свободной документации GNU версии 1.3</a> , опубликованной Фондом свободного программного обеспечения.<br> Qt и соответствующие логотипы являются товарными знаками The Qt Company Ltd. в Финляндии и/или других странах мира. Все остальные товарные знаки являются собственностью соответствующих владельцев.</p>
+</div>
+</body>
+</html>

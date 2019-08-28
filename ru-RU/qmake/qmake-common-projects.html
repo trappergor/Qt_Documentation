@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><!-- qmake-manual.qdoc --><title>Создание общих типов проектов | qmake Manual (Руководство по созданию общих типов проектов)</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-7">Qt 5.7</a></td><td ><a href="qmake-manual.html">Руководство по использованию qmake</a></td><td >Создание общих типов проектов </td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.7.1 Справочная документация</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="qmake-project-files.html" />
+  <link rel="next" href="qmake-running.html" />
+<p class="naviNextPrevious headerNavi"><a class="prevPage" href="qmake-project-files.html">Создание проектных файлов</a> <span class="naviSeparator">◦</span> <a class="nextPage" href="qmake-running.html">Запуск программы qmake</a></p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Содержание</a></h3>
+<ul>
+<li class="level1"><a href="#building-an-application">Сборка приложения (Application)</a></li>
+<li class="level1"><a href="#building-a-testcase">Сборка тестового примера (Testcase)</a></li>
+<li class="level1"><a href="#building-a-library">Сборка библиотеки</a></li>
+<li class="level1"><a href="#building-a-plugin">Сборка плагина</a></li>
+<li class="level2"><a href="#building-a-qt-designer-plugin">Сборка плагина Qt Designer Plugin</a></li>
+<li class="level1"><a href="#building-and-installing-in-debug-and-release-modes">Сборка и установка в режимах отладки и релиза</a></li>
+<li class="level2"><a href="#building-in-both-modes">Сборка в обоих режимах</a></li>
+<li class="level2"><a href="#installing-in-both-modes">Установка в обоих режимах</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Создание общих типов проектов</h1><span class="subtitle"></span> <!-- $$$qmake-common-projects.html-description --><div class="descr"><a name="details"></a><p>В этой главе описывается настройка проектных файлов qmake для трех распространенных типов проектов, основанных на Qt: приложение, библиотека и плагин. Хотя во всех типах проектов используются одни и те же переменные, в каждом из них для настройки выходных файлов используются переменные, специфичные для конкретного проекта.</p>
+<p>Здесь не описываются специфические для платформы переменные. Для получения дополнительной информации смотрите <a href="../qtdoc/windows-deployment.html">Qt for Windows - Deployment</a> и <a href="../qtdoc/osx.html">Qt for macOS</a>.</p><a name="application"></a><a name="building-an-application"></a><h2 id="building-an-application">Сборка приложения</h2>
+<p>Шаблон <code>app</code> говорит qmake сгенерировать Makefile, который будет создавать приложение. С помощью этого шаблона можно указать тип приложения, добавив в определение переменной <a href="qmake-variable-reference.html#config">CONFIG</a> одну из следующих опций:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Опции</th><th >Описание</th></tr></thead>
+<tr valign="top" class="odd"><td >windows</td><td >Приложение представляет собой графический пользовательский интерфейс Windows.</td></tr>
+<tr valign="top" class="even"><td >console</td><td ><code>app</code> Только шаблон: приложение представляет собой консольное приложение Windows.</td></tr>
+<tr valign="top" class="odd"><td >testcase</td><td >Приложение представляет собой <a href="qmake-common-projects.html#building-a-testcase">автоматизированный тест</a>.</td></tr>
+</table></div>
+<p>При использовании этого шаблона распознаются следующие системные переменные qmake. Вы должны использовать их в своем файле .pro для того чтобы описать информацию о вашем приложении. Дополнительные системные переменные, зависящие от платформы, вы можете посмотреть в <a href="qmake-platform-notes.html">Platform Notes</a>.</p>
+<ul>
+<li><a href="qmake-variable-reference.html#headers">HEADERS</a> - список заголовочных файлов для приложения.</li>
+<li><a href="qmake-variable-reference.html#sources">SOURCES</a> - список исходников приложения на языке С++.</li>
+<li><a href="qmake-variable-reference.html#forms">FORMS</a> - список файлов пользовательского интерфейса для приложения (созданный с помощью Qt Designer).</li>
+<li><a href="qmake-variable-reference.html#lexsources">LEXSOURCES</a> - список исходных файлов Lex для приложения.</li>
+<li><a href="qmake-variable-reference.html#yaccsources">YACCSOURCES</a> - список исходных файлов Yacc для приложения.</li>
+<li><a href="qmake-variable-reference.html#target">TARGET</a> - Название исполняемого файла приложения. По умолчанию используется имя файла проекта. (Расширение, если таковое имеется, добавляется автоматически).</li>
+<li><a href="qmake-variable-reference.html#destdir">DESTDIR</a> - директория, в которую помещается исполняемый файл.</li>
+<li><a href="qmake-variable-reference.html#defines">DEFINES</a> - список всех дополнительных препроцессоров, необходимых для приложения.</li>
+<li><a href="qmake-variable-reference.html#includepath">INCLUDEPATH</a> - список любых дополнительных путей, необходимых для приложения.</li>
+<li><a href="qmake-variable-reference.html#dependpath">DEPENDPATH</a> - Путь поиска зависимостей для приложения.</li>
+<li><a href="qmake-variable-reference.html#vpath">VPATH</a> - Путь поиска для поиска прилагаемых файлов.</li>
+<li><a href="qmake-variable-reference.html#def-file">DEF_FILE</a> - только для Windows: Файл .def, с которым необходимо связать приложение.</li>
+</ul>
+<p>Вам нужно использовать только те системные переменные, для которых у вас есть значения. Например, если у вас нет дополнительных INCLUDEPATH, то вам не нужно указывать какие-либо. qmake добавит необходимые значения по умолчанию. Пример файла проекта может выглядеть следующим образом:</p>
+<pre class="cpp">TEMPLATE = app DESTDIR = c:/helloapp HEADERS += hello.h SOURCES += hello.cpp SOURCES += main.cpp DEFINES += USE_MY_STUFF CONFIG += release</pre>
+<p>Для отдельных оцениваемых элементов, таких как шаблон или целевой каталог, мы используем &quot;=&quot;; но для многозначных элементов мы используем &quot;+=&quot; для <i>добавления</i> к существующим элементам этого типа. С помощью &quot;=&quot; значение переменной заменяется новым значением. Например, если мы напишем <code>DEFINES=USE_MY_STUFF</code>, все остальные определения будут удалены.</p><a name="building-a-testcase"></a><h2 id="building-a-testcase">Сборка тестового примера (Testcase)</h2>
+<p>Проект тестового примера - это <code>app</code> проект, предназначенный для запуска в качестве автоматизированного теста. Любой <code>app</code> может быть помечен как тестовый пример добавлением значения <code>testcase</code> в переменную <code>CONFIG</code>.</p>
+<p>Для тестовых проектов qmake вставит цель <code>check</code> в сгенерированный Makefile. Эта цель запустит приложение. Тест считается пройденным, если он завершается с кодом выхода равным нулю.</p>
+<p>Цель <code>check</code> автоматически возвращается через проекты <a href="qmake-variable-reference.html#subdirs">SUBDIRS</a>. Это означает, что из проекта SUBDIRS можно выполнить команду <code>make check</code> для запуска всего набора тестов.</p>
+<p>Выполнение задачи <code>check</code> может быть настроено определенными переменными Makefile. Это переменные:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Переменная</th><th >Описание</th></tr></thead>
+<tr valign="top" class="odd"><td >TESTRUNNER</td><td >Команда или фрагмент оболочки, предваряющий каждую тестовую команду. Примером использования является сценарий &quot;таймаута&quot;, который завершает тест, если он не будет завершен в течение определенного времени.</td></tr>
+<tr valign="top" class="even"><td >TESTARGS</td><td >К каждой тестовой команде добавляются дополнительные аргументы. Например, может быть полезно передать дополнительные аргументы для установки выходного файла и форматирования из теста (например, опция <code>-o filename,format</code> поддерживается <a href="../qttestlib/qtest-overview.html">QTestLib</a>).</td></tr>
+</table></div>
+<p><b>Замечание: </b>Переменные должны быть установлены при вызове инструмента <code>make</code>, а не в .pro файле. Большинство инструментов <code>make</code> поддерживают установку переменных Makefile непосредственно в командной строке:</p><pre class="cpp"><span class="preprocessor"># Run tests through test-wrapper and use xunitxml output format.</span> <span class="preprocessor"># In this example, test-wrapper is a fictional wrapper script which terminates</span> <span class="preprocessor"># a test if it does not complete within the amount of seconds set by &quot;--timeout&quot;.</span> <span class="preprocessor"># The &quot;-o result.xml,xunitxml&quot; options are interpreted by QTestLib.</span> make check TESTRUNNER<span class="operator">=</span><span class="string">&quot;test-wrapper --timeout 120&quot;</span> TESTARGS<span class="operator">=</span><span class="string">&quot;-o result.xml,xunitxml&quot;</span></pre>
+<p>Тематические проекты могут быть дополнительно настроены с помощью следующих опций <code>CONFIG</code>:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Опции</th><th >Описание</th></tr></thead>
+<tr valign="top" class="odd"><td >insignificant_test</td><td >Код выхода из теста будет проигнорирован во время <code>make check</code>.</td></tr>
+</table></div>
+<p>Testcase-ы часто пишутся с помощью <a href="../qttestlib/qtest.html">QTest</a> или <a href="../qtquick/qml-qttest-testcase.html">TestCase</a>, но это не является требованием для использования <code>CONFIG+=testcase</code> и <code>make check</code>. Единственным основным требованием является то, что тестовая программа выходит с нулевым кодом выхода при успешном завершении и ненулевым кодом выхода при неудаче.</p><a name="library"></a><a name="building-a-library"></a><h2 id="building-a-library">Построение библиотеки</h2>
+<p>Шаблон <code>lib</code> говорит qmake сгенерировать Makefile, который будет создавать библиотеку. При использовании этого шаблона помимо системных переменных, поддерживаемых шаблоном <code>app</code>, поддерживается переменная <a href="qmake-variable-reference.html#version">VERSION</a>. Используйте переменные в вашем файле .pro для указания информации о библиотеке.</p>
+<p>При использовании шаблона <code>lib</code> в переменную <a href="qmake-variable-reference.html#config">CONFIG</a> можно добавить следующие параметры для определения типа собираемой библиотеки:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Опции</th><th >Описание</th></tr></thead>
+<tr valign="top" class="odd"><td >dll</td><td >Библиотека является общей библиотекой (dll).</td></tr>
+<tr valign="top" class="even"><td >staticlib</td><td >Библиотека представляет собой статическую библиотеку.</td></tr>
+<tr valign="top" class="odd"><td >plugin</td><td >Библиотека является плагином.</td></tr>
+</table></div>
+<p>Следующая опция также может быть определена для предоставления дополнительной информации о библиотеке.</p>
+<ul>
+<li>VERSION - Номер версии целевой библиотеки. Например, пункт 2.3.1.</li>
+</ul>
+<p>Имя целевого файла библиотеки зависит от платформы. Например, на X11, <a href="../qtdoc/internationalization.html#macos">macOS</a> и iOS имя библиотеки будет иметь префикс <code>lib</code>. В Windows префикс к имени файла не добавляется.</p><a name="plugin"></a><a name="building-a-plugin"></a><h2 id="building-a-plugin">Сборка плагина</h2>
+<p>Плагины собираются с использованием шаблона <code>lib</code>, как описано в предыдущем разделе. Это говорит qmake сгенерировать Makefile для проекта, который будет создавать плагин в подходящей форме для каждой платформы, обычно в виде библиотеки. Как и в обычных библиотеках, переменная <a href="qmake-variable-reference.html#version">VERSION</a> используется для указания информации о плагине.</p>
+<ul>
+<li>VERSION - Номер версии целевой библиотеки. Например, пункт 2.3.1.</li>
+</ul><a name="building-a-qt-designer-plugin"></a><h3 >Сборка плагина Qt Designer Plugin</h3>
+<p>Плагины <i>Qt Designer</i> собираются с использованием специального набора параметров конфигурации, которые зависят от того, как Qt был настроен для вашей системы. Для удобства эти настройки можно включить, добавив <code>designer</code> в переменную <a href="qmake-variable-reference.html#qt">QT</a>. Например:</p>
+<pre class="cpp">QT <span class="operator">+</span><span class="operator">=</span> widgets designer</pre>
+<p>Смотрите <a href="../qtdesigner/examples-designer.html">Qt Designer Examples</a> для получения дополнительных примеров проектов, основанных на подключаемых модулях.</p><a name="building-and-installing-in-debug-and-release-modes"></a><h2 id="building-and-installing-in-debug-and-release-modes">Сборка и установка в режимах отладки и релиза</h2>
+<p>Иногда бывает необходимо собрать проект как в режиме отладки, так и в режиме выпуска. Хотя переменная <a href="qmake-variable-reference.html#config">CONFIG</a> может содержать как опции <code>debug</code>, так и <code>release</code>, применяется только та опция, которая указана последней.</p><a name="building-in-both-modes"></a><h3 >Сборка в обоих режимах</h3>
+<p>Чтобы проект мог быть собран в обоих режимах, необходимо добавить опцию <code>debug_and_release</code> в переменную <code>CONFIG</code>:</p>
+<pre class="cpp">CONFIG += debug_and_release CONFIG(debug, debug|release) { TARGET = debug_binary } else { TARGET = release_binary }</pre>
+<p>Область видимости в приведенном выше фрагменте изменяет встроенную цель в каждом режиме для обеспечения того, чтобы конечные цели имели разные имена. Предоставление различных имен для целей гарантирует, что один из них не перезапишет другой.</p>
+<p>Когда qmake обрабатывает файл проекта, он генерирует правило Makefile, позволяющее встраивать проект в обоих режимах. На это можно ссылаться следующим образом:</p>
+<pre class="cpp">make all</pre>
+<p>Опция <code>build_all</code> может быть добавлена в переменную <code>CONFIG</code> в файле проекта, чтобы убедиться, что проект построен в обоих режимах по умолчанию:</p>
+<pre class="cpp">CONFIG += build_all</pre>
+<p>Это позволяет обработать Makefile, используя правило по умолчанию:</p>
+<pre class="cpp">make</pre><a name="installing-in-both-modes"></a><h3 >Установка в обоих режимах</h3>
+<p>Опция <code>build_all</code> также гарантирует, что обе версии целевого устройства будут установлены при вызове правила установки:</p>
+<pre class="cpp">make install</pre>
+<p>Можно настраивать имена целей сборки в зависимости от целевой платформы. Например, библиотека или плагин может называться в Windows по-другому, чем на Unix-платформах:</p>
+<pre class="cpp">CONFIG(debug, debug|release) { mac: TARGET = $$join(TARGET,,,_debug) win32: TARGET = $$join(TARGET,,d) }</pre>
+<p>Поведение по умолчанию в приведенном выше отрывке заключается в изменении имени, используемого для целевой сборки при сборке в режиме отладки. В область видимости может быть добавлено условие <code>else</code>, чтобы сделать то же самое для режима выпуска. Если оставить имя цели без изменений, оно остается неизменным.</p>
+</div><!-- @@@qmake-common-projects.html --><p class="naviNextPrevious footerNavi"><a class="prevPage" href="qmake-project-files.html">Создание проектных файлов</a> <span class="naviSeparator">◦</span> <a class="nextPage" href="qmake-running.html">Запуск программы qmake</a></p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym>2016 The Qt Company Ltd. Documentation contributions included herein are the copyrights of their respective owners.<br> The documentation provided herein is licensed under the terms of the <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License version 1.3</a> as published by the Free Software Foundation.<br> Qt and respective logos are trademarks of The Qt Company Ltd. in Finland and/or other countries worldwide. All other trademarks are property of their respective owners.</p>
+</div>
+</body>
+</html>

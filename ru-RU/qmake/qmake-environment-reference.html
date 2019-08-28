@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><!-- qmake-manual.qdoc --><title>Настройка qmake | qmake Manual (Руководство по настройке)</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    window.onload = function(){document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");};
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+  <div class="main">
+    <div class="main-rounded">
+      <div class="navigationbar">
+        <table><tr>
+<td ><a href="../qtdoc/supported-platforms-and-configurations.html#qt-5-7">Qt 5.7</a></td><td ><a href="qmake-manual.html">Руководство по использованию qmake</a></td><td >Настройка qmake</td></tr></table><table class="buildversion"><tr>
+<td id="buildversion" width="100%" align="right">Qt 5.7.1 Справочная документация</td>
+        </tr></table>
+      </div>
+    </div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+  <link rel="prev" href="qmake-precompiledheaders.html" />
+  <link rel="next" href="qmake-reference.html" />
+<p class="naviNextPrevious headerNavi"><a class="prevPage" href="qmake-precompiledheaders.html">Использование прекомпилированных заголовков</a> <span class="naviSeparator">◦</span> <a class="nextPage" href="qmake-reference.html">Справочная информация</a></p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Содержание</a></h3>
+<ul>
+<li class="level1"><a href="#properties">Свойства</a></li>
+<li class="level1"><a href="#qmakespec">QMAKESPEC</a></li>
+<li class="level1"><a href="#cache-file">Файл кэша</a></li>
+<li class="level1"><a href="#file-extensions">Расширения файлов</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Настройка qmake</h1><span class="subtitle"></span> <!-- $$$qmake-environment-reference.html-description --><div class="descr"><a name="details"></a> <a name="properties"></a><h2 id="properties">Свойства</h2>
+<p>qmake имеет систему для постоянной конфигурации, которая позволяет вам установить свойство в qmake один раз, и запрашивать его при каждом вызове qmake. Вы можете установить свойство в qmake следующим образом:</p>
+<pre class="cpp">qmake -set PROPERTY VALUE</pre>
+<p>Соответствующее свойство и значение должны быть подставлены вместо <code>PROPERTY</code> и <code>VALUE</code>.</p>
+<p>Эту информацию можно получить обратно из qmake следующим образом:</p>
+<pre class="cpp">qmake -query PROPERTY qmake -query #queries all current PROPERTY/VALUE pairs</pre>
+<p><b>Замечание: </b><code>qmake -query</code> перечисляет встроенные свойства в дополнение к свойствам, которые вы задаете с помощью <code>qmake -set PROPERTY VALUE</code>.</p><p>Эта информация будет сохранена в объекте <a href="../qtcore/qsettings.html">QSettings</a> (то есть будет храниться в разных местах для разных платформ).</p>
+<p>Ниже приведен список <code>built-in</code> свойств:</p>
+<ul>
+<li>QMAKE_SPEC - сокращенное имя <code>mkspec</code> хоста, которое обрабатывается и хранится в переменной <a href="qmake-environment-reference.html#qmakespec">QMAKESPEC</a> во время сборки хоста.</li>
+<li>QMAKE_VERSION - текущая версия qmake</li>
+<li>QMAKE_XSPEC - сокращенное имя объекта <code>mkspec</code>, которое преобразуется и сохраняется в переменной <a href="qmake-environment-reference.html#qmakespec">QMAKESPEC</a> во время целевой сборки</li>
+<li>QT_HOST_BINS - расположение исполняемых файлов хоста</li>
+<li>QT_HOST_DATA - расположение данных для исполняемых файлов, используемых qmake.</li>
+<li>QT_HOST_PREFIX - префикс по умолчанию для всех путей хоста.</li>
+<li>QT_INSTALL_ARCHDATA - расположение общих архитектурно-зависимых данных Qt</li>
+<li>QT_INSTALL_BINS - расположение двоичных файлов Qt (инструментов и приложений)</li>
+<li>QT_INSTALL_CONFIGURATION - расположение для настроек Qt. Не применимо для Windows</li>
+<li>QT_INSTALL_DATA - расположение общих архитектурно-независимых данных Qt</li>
+<li>QT_INSTALL_DOCS - расположение документации</li>
+<li>QT_INSTALL_EXAMPLES - расположение примеров</li>
+<li>QT_INSTALL_HEADERS - расположение всех заголовочных файлов</li>
+<li>QT_INSTALL_IMPORTS - расположение расширений QML 1.x</li>
+<li>QT_INSTALL_LIBEXECS - расположение исполняемых файлов, необходимых библиотекам во время выполнения программы</li>
+<li>QT_INSTALL_LIBS - расположение библиотек</li>
+<li>QT_INSTALL_PLUGINS - расположение плагинов Qt</li>
+<li>QT_INSTALL_PREFIX - префикс по умолчанию для всех путей</li>
+<li>QT_INSTALL_QML - расположение расширений QML 2.x</li>
+<li>QT_INSTALL_TESTS - расположение тестовых примеров Qt</li>
+<li>QT_INSTALL_TRANSLATIONS - расположение информации о переводе для строк Qt</li>
+<li>QT_SYSROOT - системный корень, используемый целевой средой сборки</li>
+<li><a href="qmake-variable-reference.html#qt-version">QT_VERSION</a> - версия Qt. Мы рекомендуем запрашивать номера версий модулей Qt, используя переменные $$QT.&lt;module&gt;.version</li>
+</ul>
+<p>Например, вы можете запросить установку Qt для этой версии qmake с помощью свойства <code>QT_INSTALL_PREFIX</code>:</p>
+<pre class="cpp">qmake -query &quot;QT_INSTALL_PREFIX&quot;</pre>
+<p>Вы можете запросить значения свойств в файле проекта следующим образом:</p>
+<pre class="cpp">QMAKE_VERS = $$[QMAKE_VERSION]</pre><a name="qmakespec"></a><a name="qmakespec"></a><h2 id="qmakespec">QMAKESPEC</h2>
+<p>qmake требует файл описания платформы и компилятора, который содержит множество значений по умолчанию, используемых для генерации соответствующих Makefiles. Стандартный дистрибутив Qt поставляется со многими из этих файлов, расположенных в подкаталоге <code>mkspecs</code> установки Qt.</p>
+<p>Переменная окружения <code>QMAKESPEC</code> может содержать любое из следующих значений:</p>
+<ul>
+<li>Полный путь к директории, содержащей файл <code>qmake.conf</code>. В этом случае qmake откроет файл <code>qmake.conf</code> из этого каталога. Если файла не существует, qmake завершит работу с ошибкой.</li>
+<li>Название комбинации платформа-компилятор. В этом случае qmake будет искать в каталоге, указанном подкаталогом <code>mkspecs</code> пути данных, указанного при компиляции Qt (см. <a href="../qtcore/qlibraryinfo.html#LibraryLocation-enum">QLibraryInfo::DataPath</a>).</li>
+</ul>
+<p><b>Замечание: </b>Путь <code>QMAKESPEC</code> будет автоматически добавлен в системную переменную <a href="qmake-variable-reference.html#includepath">INCLUDEPATH</a>.</p><a name="cache"></a><a name="cache-file"></a><h2 id="cache-file">Файл кэша</h2>
+<p>Файл кэша представляет собой специальный файл qmake, который содержит настройки, не указанные в файле <code>qmake.conf</code>, файлах проектов или в командной строке. Когда qmake запущен, он ищет файл под названием <code>.qmake.cache</code> в родительских каталогах текущей директории, если только вы не укажете <code>-nocache</code>. Если qmake не найдет этот файл, он автоматически проигнорирует этот шаг обработки.</p>
+<p>Если qmake найдет файл <code>.qmake.cache</code>, он сначала обработает этот файл, а затем файл проекта.</p><a name="extensions"></a><a name="file-extensions"></a><h2 id="file-extensions">Расширения файлов</h2>
+<p>В обычных условиях qmake попытается использовать соответствующие расширения файлов для вашей платформы. Однако иногда необходимо переопределить настройки по умолчанию для каждой платформы и явно указать расширения файлов для использования qmake. Это достигается путем переопределения некоторых встроенных (built-in) переменных. Например, расширение, используемое для <a href="../qtdoc/moc.html">moc</a>-файлов, может быть переопределено следующим образом в файле проекта:</p>
+<pre class="cpp">QMAKE_EXT_MOC = .mymoc</pre>
+<p>Следующие переменные могут быть использованы для переопределения распространенных расширений файлов, распознаваемых qmake:</p>
+<ul>
+<li><a href="qmake-variable-reference.html#qmake-ext-moc">QMAKE_EXT_MOC</a> модифицирует расширение, размещенное на включенных moc-файлах.</li>
+<li><a href="qmake-variable-reference.html#qmake-ext-ui">QMAKE_EXT_UI</a> модифицирует расширение, используемое для файлов пользовательского интерфейса <i>Qt Designer</i> (обычно в <a href="qmake-variable-reference.html#forms">FORMS</a>).</li>
+<li><a href="qmake-variable-reference.html#qmake-ext-prl">QMAKE_EXT_PRL</a> изменяет расширение, размещенное на <a href="qmake-advanced-usage.html#libdepend">файлах зависимостей библиотек</a>.</li>
+<li><a href="qmake-variable-reference.html#qmake-ext-lex">QMAKE_EXT_LEX</a> изменяет суффикс, используемый в Lex-файлах (обычно в <a href="qmake-variable-reference.html#lexsources">LEXSOURCES</a>).</li>
+<li><a href="qmake-variable-reference.html#qmake-ext-yacc">QMAKE_EXT_YACC</a> изменяет суффикс, используемый в файлах Yacc (обычно в <a href="qmake-variable-reference.html#yaccsources">YACCSOURCES</a>).</li>
+<li><a href="qmake-variable-reference.html#qmake-ext-obj">QMAKE_EXT_OBJ</a> изменяет суффикс, используемый для генерируемых объектных файлов.</li>
+</ul>
+<p>Все вышеперечисленное принимает только первое значение, поэтому вы должны задать лишь одно значение, которое будет использоваться во всем файле вашего проекта. Есть две переменные, которые принимают список значений:</p>
+<ul>
+<li><a href="qmake-variable-reference.html#qmake-ext-cpp">QMAKE_EXT_CPP</a> заставляет qmake интерпретировать все файлы с этими суффиксами как исходные файлы C++.</li>
+<li><a href="qmake-variable-reference.html#qmake-ext-h">QMAKE_EXT_H</a> заставляет qmake интерпретировать все файлы с этими суффиксами как C и C++ заголовочные файлы.</li>
+</ul>
+</div><!-- @@@qmake-environment-reference.html --><p class="naviNextPrevious footerNavi"><a class="prevPage" href="qmake-precompiledheaders.html">Использование прекомпилированных заголовков</a> <span class="naviSeparator">◦</span> <a class="nextPage" href="qmake-reference.html">Справочная информация</a></p>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym>2016 The Qt Company Ltd. Documentation contributions included herein are the copyrights of their respective owners.<br> The documentation provided herein is licensed under the terms of the <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License version 1.3</a> as published by the Free Software Foundation.<br> Qt and respective logos are trademarks of The Qt Company Ltd. in Finland and/or other countries worldwide. All other trademarks are property of their respective owners.</p>
+</div>
+</body>
+</html>
